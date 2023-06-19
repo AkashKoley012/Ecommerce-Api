@@ -6,6 +6,7 @@ const router = express.Router();
 router.post("/create", create);
 //! update quantity of product
 router.post("/:id/update_quantity", update);
+router.get("/:id/update_quantity", update);
 //! delete a product
 router.delete("/:id", deleteProduct);
 //! get all products
