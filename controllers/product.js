@@ -38,7 +38,12 @@ module.exports.update = async (req, res) => {
         let inc = req.query.number;
         let productId = req.params.id;
         let product = await Product.findById(productId);
-        if (product) product = await Product.findByIdAndUpdate(productId, { $set: { quantity: product.quantity + Number(inc) > 0 ? product.quantity + Number(inc) : 0 } }, { new: true });
+        if (product) {
+            let count = product.quantity + Number(inc);
+            count = count > 0 ? count : 0;
+            product = await Product.findByIdAndUpdate(productId, { quantity: count }, { new: true });
+        }
+        console.log(product);
         return res.status(200).json({ data: { product: product }, message: "update successfully" });
     } catch (error) {
         return res.status(500).json({ error: error.message });
